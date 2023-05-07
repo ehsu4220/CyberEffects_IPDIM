@@ -17,11 +17,14 @@ Copy the index.html and malicious pdf to the '/var/www/html' directory
 
 Run 'sudo systemctl start apache2' to start the server
 
-File can be downloaded at http://<host network IP>:80
+File can be downloaded at http://***host network IP***:80
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use 'ip addr show' and locate the host network IP
 
 ## Setting up and running any of the shell scripts
 
 'chmod +x <script name>'
 
-'./<script name>'
+'./***script name***'
+
+## General Steps
