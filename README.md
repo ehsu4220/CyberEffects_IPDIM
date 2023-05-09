@@ -5,9 +5,11 @@ This is a simulation of a legally questionable way of determining whether intell
 
 ## Vulnerable Target
 
-Windows 10 OS with Adobe Reader ver. 8.2.0 installed
+Windows XP OS with Adobe Reader ver. 8.2.0 installed
 
 Link to the vulnerable Adobe Reader ver. 8.2.0 [here](http://www.oldversion.com/windows/acrobat-reader-8-2-0)
+
+Free Windows XP .iso file [here](https://eprebys.faculty.ucdavis.edu/2020/04/08/installing-windows-xp-in-virtualbox-or-other-vm/#:~:text=The%20product%20key%20is%20now,Mac%20can%20be%20found%20here.)
 
 ## Setting up Apache2 server to host malicious PDF
 
