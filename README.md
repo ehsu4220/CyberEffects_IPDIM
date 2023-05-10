@@ -30,3 +30,11 @@ File can be downloaded at http://***host network IP***:80
 './***script name***'
 
 ## General Steps
+
+Begin by generating the malicious PDF and generate encrypted archive file by generating the exe of 'generate_malicious_pdf.sh'.
+
+  Run the exe, which will add the encrypted archive file to /var/www/html/
+    
+    Access the IP and Port that the Apache2 is running on
+    
+    Activate the listener script to initialize the session
