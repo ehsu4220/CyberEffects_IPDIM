@@ -54,6 +54,14 @@ Follow the following videos in order
           chmod +x generate_malicious_pdf.sh
   
           ./generate_malicious_pdf.sh
+          
+2. Set IP for Flask server to the inet IP
+
+          'ifconfig'
+          
+          Find IP address right after inet
+          
+          Add inet IP to the app.run(debug=True, host='0.0.0.0', port=8080)
 
 2. Start flask server that is responsible for communicating with implants
           
