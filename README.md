@@ -71,7 +71,9 @@ Follow the following videos in order
 
 3. Build the implant.cs into an executable
           
-          mcs implant.cs
+          Use .Net 4.0 Windows device to build the executable
+          
+          csc implant.cs
 
 4. Start listener by running the listener.sh script
   
