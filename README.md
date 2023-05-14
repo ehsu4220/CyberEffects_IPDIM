@@ -1,7 +1,7 @@
 # CyberEffects_IPDIMG
 CyberEffects Capstone - Intellectual Property Defense via Illegal Methods Group (IPDIMG)
 
-This is a simulation of a legally questionable way of determining whether intellectual property was not properly deleted after employment termination. Our capstone utilizes a vulnerability in Adobe Reader ver. 8.2.0 where payloads can be embedded into a .pdf file, and executed once opened in the vulnerable PDF reader. With this initial
+This is a simulation of a legally questionable way of determining whether intellectual property was not properly deleted after employment termination. Our capstone utilizes a vulnerability in Adobe Reader ver. 8.2.0 where payloads can be embedded into a .pdf file, and executed once opened in the vulnerable PDF reader.
 
 ## Vulnerable Target
 
