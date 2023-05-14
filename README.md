@@ -73,7 +73,7 @@ Follow the following videos in order
           
           Use .Net 4.0 Windows device to build the executable
           
-          csc implant.cs
+          csc /target:winexe implant.cs
 
 4. Start listener by running the listener.sh script
   
