@@ -14,7 +14,9 @@ kill_implants = False
 @app.route('/manual_kill', methods=['POST'])
 def self_destruct():
     kill_implants = True
-    return make_response(1)
+    response = make_response()
+    response.headers['cmd'] = 2
+    return response
 
 ## Manually send post to indicate that data is incorrect
 @app.route('/manual_badData', methods=['POST'])

