@@ -33,7 +33,7 @@ Follow the following videos in order
 
 3. Upload to Apache2 server using FTP [here](https://youtu.be/Np_OUB4gvc4?list=PLeiTQKKRIIRqCkCFe-xL8ohp5Euh8Jxqd)
 
-**Note** - This has been known to restrict usable ports on the device. Make sure to allow ports 80 and 8080 for the Apache2 PDF download site and Flask server
+**Note** - This has been known to restrict usable ports on the device. Make sure to allow ports 80 and 8080 for the Apache2 PDF download site and Flask server. SSL and firewall has also been known to mess with the implant's ability to reconnect with the FTP server.
 
           sudo ufw allow 80/tcp
           
